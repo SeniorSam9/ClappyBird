@@ -1,1 +1,1 @@
-## On-Browser-Game, similar to Flappy Bird Game!
+*On-Browser-Game, similar to Flappy Bird Game!*
