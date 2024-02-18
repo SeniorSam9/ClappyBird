@@ -1,11 +1,16 @@
 {
-  "name": "clappybird",
+  "name": "sortme",
   "version": "1.0.0",
-  "description": "On-Browser-Game, similar to Flappy Bird Game!",
+  "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "SeniorSam",
-  "license": "ISC"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ndarray-pixels": "^1.0.0"
+  }
 }

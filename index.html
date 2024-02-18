@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏙️ | SortMe</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h2>Upload an image and get it sorted ༼ つ ◕_◕ ༽つ</h2>
+      <p class="explain">
+        Sorting an image in a sense means sorting all pixels of that certain
+        image that <em>you</em> will upload. Hence, you see the
+        <strong>Weird...Funny</strong> result!
+      </p>
+    </header>
+
+    <main>
+      <form>
+        <p><b>Only images files are acceptable</b></p>
+        <label for="image" id="drop-zone">
+          <span id="file-display">Drop the image here</span>
+          or
+          <input type="file" accept="image/*" id="file-input" required />
+          <button id="remove-btn">Remove Image</button>
+        </label>
+        <button id="submit-btn" type="submit">Sort Image</button>
+      </form>
+
+      <section id="main-course">
+        <div id="original-image">
+          <h3>Original Image</h3>
+          <img src="" alt="original-image" />
+        </div>
+        <div id="sorted-image">
+          <h3>Sorted Image</h3>
+          <img src="" alt="sorted-image" />
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Note: This app is only made for fun, it DOES NOT save any uploaded image
+        by any user in any way, It just uses it for scripting then deletes it.
+      </p>
+    </footer>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
