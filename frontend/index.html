@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🏙️ | SortMe</title>
-    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="stylesheet" href="/frontend/src/styles.css" />
   </head>
   <body>
     <header>
@@ -17,7 +17,7 @@
     </header>
 
     <main>
-      <form>
+      <form method="post" enctype="multipart/form-data">
         <p><b>Only images files are acceptable</b></p>
         <label for="image" id="drop-zone">
           <span id="file-display">Drop the image here</span>
@@ -46,6 +46,6 @@
         by any user in any way, It just uses it for scripting then deletes it.
       </p>
     </footer>
-    <script type="module" src="/src/app.js"></script>
+    <script type="module" src="/frontend/src/app.js"></script>
   </body>
 </html>

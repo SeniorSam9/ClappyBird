@@ -1,4 +1,7 @@
-import { dragOverHandler, dropHandler } from "/src/scripts/dragAndDrop.js";
+import {
+  dragOverHandler,
+  dropHandler,
+} from "/frontend/src/scripts/dragAndDrop.js";
 
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
@@ -30,6 +33,18 @@ removeBtn.addEventListener("click", () => {
   fileDisplay.innerText = "Drop the image here";
 });
 
-submitBtn.addEventListener("submit", (evt) => {
+submitBtn.addEventListener("submit", async (evt) => {
   evt.preventDefault();
+  const formData = new FormData();
+  formData.append("originalImage", fileInput.files[0]);
+  const response = await fetch("http://172.20.10.2:3400", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: formData,
+  });
+  const sortedImageFile = await response.json();
+  // cont
+  return sortedImageFile;
 });
