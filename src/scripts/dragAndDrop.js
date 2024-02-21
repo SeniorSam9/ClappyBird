@@ -7,13 +7,13 @@ function dragOverHandler(evt, dropZone) {
 }
 
 function dropHandler(evt, dropZone) {
-  // the default behavious of the browser is to open the file system when
+  // the default behaviour of the browser is to open the file system when
   // the file is dropped, i wanna ignore that
   evt.preventDefault();
   dropZone.style.border = "2px dashed #3498db";
 
   if (evt.dataTransfer.items) {
-    [...evt.dataTransfer.items].forEach((item, index) => {
+    [...evt.dataTransfer.items].forEach((item, _) => {
       // ignore the item if not file
       if (item.kind === "file") {
         const file = item.getAsFile();
@@ -24,7 +24,7 @@ function dropHandler(evt, dropZone) {
     });
     // some browsers may not support evt.dataTransfer.items
   } else {
-    [...ev.dataTransfer.files].forEach((file, i) => {
+    [...ev.dataTransfer.files].forEach((file, _) => {
       const fileCustomName = file.name.substring(file.name.charAt(0));
       fileDisplay.innerText = `Dropped file: ${fileCustomName}`;
       removeBtn.style.display = "inline-block";

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🏙️ | SortMe</title>
-    <link rel="stylesheet" href="/frontend/src/styles.css" />
+    <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
     <header>
@@ -22,7 +22,13 @@
         <label for="image" id="drop-zone">
           <span id="file-display">Drop the image here</span>
           or
-          <input type="file" accept="image/*" id="file-input" required />
+          <input
+            type="file"
+            name="original-image"
+            accept="image/*"
+            id="file-input"
+            required
+          />
           <button id="remove-btn">Remove Image</button>
         </label>
         <button id="submit-btn" type="submit">Sort Image</button>
@@ -46,6 +52,6 @@
         by any user in any way, It just uses it for scripting then deletes it.
       </p>
     </footer>
-    <script type="module" src="/frontend/src/app.js"></script>
+    <script type="module" src="/src/entry.js"></script>
   </body>
 </html>
