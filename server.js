@@ -14,7 +14,7 @@ import cors from "cors";
 
 const server = express();
 const port = process.env.PORT || 3300;
-const allowedFileTypes = ["image/jpeg", "image/png"];
+const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
 
 // use services
 server.use(cors());
@@ -41,7 +41,14 @@ const fileFilter = (req, file, callback) => {
 
 const uploader = multer({ storage: storage, fileFilter: fileFilter });
 
-app.use(express.static("assets"));
+//app.use(express.static("assets"));
+
+// middle-wares
+server.post(
+  "/upload-original-image",
+  uploader.single("original-image"),
+  (req, res) => {}
+);
 
 server.listen(port, () => {
   console.info(`⚡ Server is running at http://localhost:${port}`);

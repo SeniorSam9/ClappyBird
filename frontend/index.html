@@ -17,17 +17,16 @@
     </header>
 
     <main>
-      <form method="post" enctype="multipart/form-data">
-        <p><b>Only images files are acceptable</b></p>
+      <p id="error">An error occured, please try again!</p>
+      <form enctype="multipart/form-data">
+        <p><b>Only ".png, .jpeg, .jpg" files are acceptable</b></p>
         <label for="image" id="drop-zone">
-          <span id="file-display">Drop the image here</span>
-          or
+          <span id="file-display">Drop the image here <br />or</span>
           <input
             type="file"
             name="original-image"
             accept="image/*"
             id="file-input"
-            required
           />
           <button id="remove-btn">Remove Image</button>
         </label>
@@ -48,8 +47,9 @@
 
     <footer>
       <p>
-        Note: This app is only made for fun, it DOES NOT save any uploaded image
-        by any user in any way, It just uses it for scripting then deletes it.
+        Note: This app is made for fun, it saves an uploaded image into assets
+        folder, it uses it for scripting then deletes it. The developer has no
+        access to it entirely.
       </p>
     </footer>
     <script type="module" src="/frontend/src/app.js"></script>

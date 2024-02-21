@@ -73,6 +73,7 @@ button {
   height: 2.3rem;
   width: 20rem;
   margin-top: 2rem;
+  margin-bottom: 1rem;
   border-radius: 10px;
   border-width: 1px;
   cursor: pointer;
@@ -111,4 +112,11 @@ footer {
   position: sticky;
   top: 100%;
   margin-bottom: 2rem;
+}
+
+#error {
+  margin-top: 1rem;
+  display: none;
+  color: red;
+  font-weight: bold;
 }
