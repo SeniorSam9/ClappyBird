@@ -15,10 +15,11 @@ import { sortImage } from "/backend/models/sortImage.js";
 
 const server = express();
 const port = process.env.PORT || 3300;
-const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+const allowedFileTypes = ["image/jpeg", "image/png"];
 
 // use services
 server.use(cors());
+server.use(express.static("assets"));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,6 +32,8 @@ const storage = multer.diskStorage({
   },
 });
 
+const uploader = multer({ storage: storage, fileFilter: fileFilter });
+
 const fileFilter = (req, file, callback) => {
   if (allowedFileTypes.includes(file.mimetype)) {
     // allow to save it to assets
@@ -40,13 +43,17 @@ const fileFilter = (req, file, callback) => {
   }
 };
 
-const uploader = multer({ storage: storage, fileFilter: fileFilter });
-
 // middle-wares
 server.post(
   "/upload-original-image",
   uploader.single("original-image"),
-  (req, res) => {
+  async (req, res) => {
+    const uploadedImageName = req.file.originalname;
+    const fileExtension = path.extname(uploadedImageName);
+    try {
+      const sortedImageName = await sortImage(uploadedImageName, fileExtension);
+      res.end();
+    } catch (error) {}
     res.end();
   }
 );

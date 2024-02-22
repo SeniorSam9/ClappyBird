@@ -14,7 +14,7 @@ async function handleImage(file) {
       {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: formData,
       }
@@ -33,7 +33,7 @@ async function handleImage(file) {
 }
 
 function isImage(file) {
-  const allowedExtensions = [".jpg", ".jpeg", ".png"];
+  const allowedExtensions = [".jpeg", ".png"];
   const fileExtension = file.name.slice((file.name.lastIndexOf(".") - 1) >>> 0);
   return allowedExtensions.includes("." + fileExtension.toLowerCase());
 }
