@@ -2,10 +2,7 @@ const errorMsg = document.getElementById("error");
 
 async function handleImage(file) {
   if (!file || !isImage(file)) {
-    setTimeout(() => {
-      errorMsg.style.display = "none";
-    }, 4000);
-    errorMsg.style.display = "inline-block";
+    displayErrorMsg();
     return;
   }
   const formData = new FormData();
@@ -24,7 +21,13 @@ async function handleImage(file) {
     );
 
     const sortedImage = await response.json();
-  } catch (error) {}
+    if (!sortedImage.success) {
+      throw new Error();
+    }
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    displayErrorMsg();
+  }
 
   return sortedImage;
 }
@@ -34,4 +37,13 @@ function isImage(file) {
   const fileExtension = file.name.slice((file.name.lastIndexOf(".") - 1) >>> 0);
   return allowedExtensions.includes("." + fileExtension.toLowerCase());
 }
+
+function displayErrorMsg() {
+  setTimeout(() => {
+    errorMsg.style.display = "none";
+  }, 4000);
+  errorMsg.style.display = "inline-block";
+  return;
+}
+
 export { handleImage };

@@ -11,6 +11,7 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
+import { sortImage } from "/backend/models/sortImage.js";
 
 const server = express();
 const port = process.env.PORT || 3300;
@@ -21,7 +22,7 @@ server.use(cors());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets");
+    cb(null, "frontend/assets");
   },
   filename: (req, file, cb) => {
     const timestamp = Date.now();
@@ -41,13 +42,13 @@ const fileFilter = (req, file, callback) => {
 
 const uploader = multer({ storage: storage, fileFilter: fileFilter });
 
-//app.use(express.static("assets"));
-
 // middle-wares
 server.post(
   "/upload-original-image",
   uploader.single("original-image"),
-  (req, res) => {}
+  (req, res) => {
+    res.end();
+  }
 );
 
 server.listen(port, () => {
