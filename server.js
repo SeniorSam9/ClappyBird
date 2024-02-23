@@ -51,16 +51,14 @@ server.post(
   "/upload-original-image",
   uploader.single("image"),
   async (req, res) => {
-    //   console.log(req.file);
-    //   console.log(req.body);
-    //   const uploadedImageName = req.file.filename;
-    //   const fileExtension = path.extname(uploadedImageName);
-    //   try {
-    //     const sortedImageName = await sortImage(uploadedImageName, fileExtension);
-    //     res.end();
-    //   } catch (error) {}
-    //   res.end();
-    console.log(req.body);
+    const uploadedImageName = req.file.filename;
+    const fileExtension = path.extname(uploadedImageName);
+    try {
+      const sortedImageName = await sortImage(uploadedImageName, fileExtension);
+    } catch (error) {
+      console.error(error);
+      res.end();
+    }
   }
 );
 

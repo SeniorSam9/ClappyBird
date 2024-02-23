@@ -1,10 +1,11 @@
 import { savePixels, getPixels } from "ndarray-pixels";
 import fileSystem from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 async function sortImage(imageName, fileExtension) {
   // get image path
-  const imagePath = path.join(__dirname, "frontend/assets", imageName);
+  const imagePath = getFilePath(imageName);
   // get image
   const bufferIn = fileSystem.readFileSync(imagePath);
   let typeToSupport;
@@ -29,7 +30,7 @@ async function sortImage(imageName, fileExtension) {
       console.log("height: " + j);
     }
   }
-  return;
+  return { process: true, data: "" };
 }
 
 function supportedFileExtension(extension) {
@@ -47,6 +48,14 @@ function supportedFileExtension(extension) {
   }
 
   return typeToSupport;
+}
+
+// returns paths to use
+function getFilePath(imageName) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const imagePath = path.join(__dirname, "../../frontend/assets", imageName);
+  return imagePath;
 }
 
 export { sortImage };
