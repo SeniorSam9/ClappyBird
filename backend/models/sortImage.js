@@ -29,6 +29,7 @@ async function sortImage(imageName, fileExtension) {
       console.log("height: " + j);
     }
   }
+  return;
 }
 
 function supportedFileExtension(extension) {

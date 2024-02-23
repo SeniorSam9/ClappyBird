@@ -11,7 +11,8 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-import { sortImage } from "/backend/models/sortImage.js";
+import bodyParser from "body-parser";
+import { sortImage } from "./backend/models/sortImage.js";
 
 const server = express();
 const port = process.env.PORT || 3300;
@@ -19,7 +20,9 @@ const allowedFileTypes = ["image/jpeg", "image/png"];
 
 // use services
 server.use(cors());
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(express.static("assets"));
+server.use(express.json());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,8 +35,6 @@ const storage = multer.diskStorage({
   },
 });
 
-const uploader = multer({ storage: storage, fileFilter: fileFilter });
-
 const fileFilter = (req, file, callback) => {
   if (allowedFileTypes.includes(file.mimetype)) {
     // allow to save it to assets
@@ -43,18 +44,23 @@ const fileFilter = (req, file, callback) => {
   }
 };
 
+const uploader = multer({ storage: storage, fileFilter: fileFilter });
+
 // middle-wares
 server.post(
   "/upload-original-image",
-  uploader.single("original-image"),
+  uploader.single("image"),
   async (req, res) => {
-    const uploadedImageName = req.file.originalname;
-    const fileExtension = path.extname(uploadedImageName);
-    try {
-      const sortedImageName = await sortImage(uploadedImageName, fileExtension);
-      res.end();
-    } catch (error) {}
-    res.end();
+    //   console.log(req.file);
+    //   console.log(req.body);
+    //   const uploadedImageName = req.file.filename;
+    //   const fileExtension = path.extname(uploadedImageName);
+    //   try {
+    //     const sortedImageName = await sortImage(uploadedImageName, fileExtension);
+    //     res.end();
+    //   } catch (error) {}
+    //   res.end();
+    console.log(req.body);
   }
 );
 

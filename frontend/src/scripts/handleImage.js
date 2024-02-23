@@ -6,16 +6,12 @@ async function handleImage(file) {
     return;
   }
   const formData = new FormData();
-  formData.append("original-image", file);
-
+  formData.append("image", file);
   try {
     const response = await fetch(
       "http://localhost:3300/upload-original-image",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: formData,
       }
     );
@@ -34,8 +30,10 @@ async function handleImage(file) {
 
 function isImage(file) {
   const allowedExtensions = [".jpeg", ".png"];
-  const fileExtension = file.name.slice((file.name.lastIndexOf(".") - 1) >>> 0);
-  return allowedExtensions.includes("." + fileExtension.toLowerCase());
+  const fileExtension = file.name.slice(file.name.lastIndexOf(".") >>> 0);
+  console.log(fileExtension);
+  console.log(allowedExtensions.includes("." + fileExtension.toLowerCase()));
+  return allowedExtensions.includes(fileExtension.toLowerCase());
 }
 
 function displayErrorMsg() {
