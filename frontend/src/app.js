@@ -1,11 +1,12 @@
 import { dragOverHandler, dropHandler } from "./scripts/dragAndDrop.js";
-import { handleImage } from "./scripts/handleImage.js";
-
-const dropZone = document.getElementById("drop-zone");
-const fileInput = document.getElementById("file-input");
-const fileDisplay = document.getElementById("file-display");
-const removeBtn = document.getElementById("remove-btn");
-const submitBtn = document.getElementById("submit-btn");
+import { handleOriginalImage } from "./scripts/handleOriginalImage.js";
+import {
+  dropZone,
+  fileInput,
+  removeBtn,
+  fileDisplay,
+  submitBtn,
+} from "./constants/documentConstants.js";
 
 dropZone.addEventListener("dragover", (evt) => {
   dragOverHandler(evt, dropZone);
@@ -33,5 +34,5 @@ removeBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", async (evt) => {
   evt.preventDefault();
   const originalImage = fileInput.files[0];
-  await handleImage(originalImage);
+  await handleOriginalImage(originalImage);
 });

@@ -1,5 +1,4 @@
-const fileDisplay = document.getElementById("file-display");
-const removeBtn = document.getElementById("remove-btn");
+import { fileDisplay, removeBtn } from "../constants/documentConstants";
 
 function dragOverHandler(evt, dropZone) {
   evt.preventDefault();

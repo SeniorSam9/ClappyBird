@@ -1,12 +1,10 @@
-const errorMsg = document.getElementById("error");
-
-async function handleImage(file) {
-  if (!file || !isImage(file)) {
+async function handleOriginalImage(originalImage) {
+  if (!originalImage || !isImage(originalImage)) {
     displayErrorMsg();
     return;
   }
   const formData = new FormData();
-  formData.append("image", file);
+  formData.append("originalImage", originalImage);
   try {
     const response = await fetch(
       "http://localhost:3300/upload-original-image",
@@ -23,6 +21,7 @@ async function handleImage(file) {
   } catch (err) {
     console.error(`Error: ${err}`);
     displayErrorMsg();
+    return;
   }
 
   return sortedImage;
@@ -44,4 +43,4 @@ function displayErrorMsg() {
   return;
 }
 
-export { handleImage };
+export { handleOriginalImage };
