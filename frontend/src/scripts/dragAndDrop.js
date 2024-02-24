@@ -1,4 +1,4 @@
-import { fileDisplay, removeBtn } from "../constants/documentConstants";
+import { fileDisplay, removeBtn } from "../constants/documentConstants.js";
 
 function dragOverHandler(evt, dropZone) {
   evt.preventDefault();

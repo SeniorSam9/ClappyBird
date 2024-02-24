@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 async function sortImage(imageName, fileExtension) {
   // get image path
   const imagePath = getFilePath(imageName);
-  // get image
+  // get image (read)
   const bufferIn = fileSystem.readFileSync(imagePath);
   let typeToSupport;
   try {
@@ -14,23 +14,26 @@ async function sortImage(imageName, fileExtension) {
   } catch (error) {
     console.error(`Error: ${error}`);
     return {
-      process: false,
-      data: "",
+      procedure: false,
+      data: "Failure",
     };
   }
   // convert to pixels
   const pixels = await getPixels(bufferIn, typeToSupport);
-
-  // modifyImage
-  const [imageWidth, imageHeight] = pixels.shape;
-  // i and j for width, height
-  for (let i = 0; i < imageWidth; i++) {
-    console.log("width: " + i);
-    for (let j = 0; j < imageHeight; j++) {
-      console.log("height: " + j);
-    }
-  }
-  return { process: true, data: "" };
+  // modifyImage (Array.sort() uses MergeSort leading O(n * log(n)) based on (Mozilla/Firefox)
+  // pixels.data just flattened the 2D array
+  pixels.data = pixels.data.sort();
+  // build the image again (write)
+  const bufferOut = await savePixels(pixels, typeToSupport);
+  // save to sortedAssets
+  const timestamp = Date.now();
+  const sortedImageName = `${timestamp}${fileExtension}`;
+  const sortedImagePath = setFilePath(sortedImageName);
+  fileSystem.writeFileSync(sortedImagePath, bufferOut);
+  return {
+    procedure: true,
+    data: sortedImagePath,
+  };
 }
 
 function supportedFileExtension(extension) {
@@ -50,11 +53,26 @@ function supportedFileExtension(extension) {
   return typeToSupport;
 }
 
+function setFilePath(imageName) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const sortedImagePath = path.join(
+    __dirname,
+    "../../frontend/sortedAssets",
+    imageName
+  );
+  return sortedImagePath;
+}
+
 // returns paths to use
 function getFilePath(imageName) {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const imagePath = path.join(__dirname, "../../frontend/assets", imageName);
+  const imagePath = path.join(
+    __dirname,
+    "../../frontend/originalAssets",
+    imageName
+  );
   return imagePath;
 }
 

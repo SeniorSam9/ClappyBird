@@ -21,12 +21,13 @@ const allowedFileTypes = ["image/jpeg", "image/png"];
 // use services
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(express.static("assets"));
+server.use(express.static("originalAssets"));
+server.use(express.static("sortedAssets"));
 server.use(express.json());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "frontend/assets");
+    cb(null, "frontend/originalAssets");
   },
   filename: (req, file, cb) => {
     const timestamp = Date.now();
@@ -49,15 +50,25 @@ const uploader = multer({ storage: storage, fileFilter: fileFilter });
 // middle-wares
 server.post(
   "/upload-original-image",
-  uploader.single("image"),
+  uploader.single("originalImage"),
   async (req, res) => {
     const uploadedImageName = req.file.filename;
     const fileExtension = path.extname(uploadedImageName);
     try {
-      const sortedImageName = await sortImage(uploadedImageName, fileExtension);
+      const { procedure, data } = await sortImage(
+        uploadedImageName,
+        fileExtension
+      );
+      res.json({
+        procedure: procedure,
+        data: data,
+      });
     } catch (error) {
       console.error(error);
-      res.end();
+      res.json({
+        procedure: false,
+        data: "Failure",
+      });
     }
   }
 );

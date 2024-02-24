@@ -1,3 +1,5 @@
+import { errorMsg } from "../constants/documentConstants.js";
+
 async function handleOriginalImage(originalImage) {
   if (!originalImage || !isImage(originalImage)) {
     displayErrorMsg();
@@ -15,9 +17,10 @@ async function handleOriginalImage(originalImage) {
     );
 
     const sortedImage = await response.json();
-    if (!sortedImage.success) {
-      throw new Error();
-    }
+    // if () {
+    //   throw new Error();
+    // }
+    console.log(sortedImage);
   } catch (err) {
     console.error(`Error: ${err}`);
     displayErrorMsg();
