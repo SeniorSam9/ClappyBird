@@ -1,33 +1,47 @@
-import { errorMsg } from "../constants/documentConstants.js";
+import {
+  errorMsg,
+  mainCourse,
+  originalImage,
+  shuffledImage,
+} from "../constants/documentConstants.js";
 
-async function handleOriginalImage(originalImage) {
+function handleOriginalImage(originalImage) {
   if (!originalImage || !isImage(originalImage)) {
     displayErrorMsg();
     return;
   }
   const formData = new FormData();
   formData.append("originalImage", originalImage);
-  try {
-    const response = await fetch(
-      "http://localhost:3300/upload-original-image",
-      {
-        method: "POST",
-        body: formData,
+
+  fetch("http://localhost:3300/upload-original-image", {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.procedure) {
+        displayErrorMsg();
+        return;
+      } else {
+        const originalImageToPass = data.originalImage.substring(
+          data.originalImage.lastIndexOf("\\") + 1
+        );
+        const shuffledImageToPass = data.shuffledImage.substring(
+          data.shuffledImage.lastIndexOf("\\") + 1
+        );
+        console.log(originalImageToPass);
+        console.log(shuffledImageToPass);
+        handleMainCourse(originalImageToPass, shuffledImageToPass);
       }
-    );
+    })
+    .catch((err) => console.error(err));
+}
 
-    const sortedImage = await response.json();
-    // if () {
-    //   throw new Error();
-    // }
-    console.log(sortedImage);
-  } catch (err) {
-    console.error(`Error: ${err}`);
-    displayErrorMsg();
-    return;
-  }
-
-  return sortedImage;
+function handleMainCourse(originalImagePath, shuffledImagePath) {
+  originalImage.src = `originalAssets/${originalImagePath}`;
+  shuffledImage.src = `shuffledAssets/${shuffledImagePath}`;
+  mainCourse.style.display = "flex";
+  return;
 }
 
 function isImage(file) {

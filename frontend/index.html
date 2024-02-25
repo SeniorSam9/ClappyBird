@@ -3,22 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🏙️ | SortMe</title>
-    <link rel="stylesheet" href="/frontend/src/styles.css" />
+    <title>🏙️ | Shuffle me</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header>
-      <h2>Upload an image and get it sorted ༼ つ ◕_◕ ༽つ</h2>
+      <h2>Upload an image and get it shuffled ༼ つ ◕_◕ ༽つ</h2>
       <p class="explain">
-        Sorting an image in a sense means sorting all pixels of that certain
-        image that <em>you</em> will upload. Hence, you see the
-        <strong>Weird...Funny</strong> result!
+        Shuffling an image in a sense means shuffling (rearranging) all pixels
+        of that certain image that <em>you</em> will upload. Hence, you see the
+        <strong>Weird...</strong> result!
       </p>
     </header>
 
     <main>
       <p id="error">An error occured, please try again!</p>
-      <form enctype="multipart/form-data">
+      <form
+        action="/upload-original-image"
+        method="post"
+        enctype="multipart/form-data"
+        id="my-form"
+      >
         <p><b>Only ".png, .jpeg" files are acceptable</b></p>
         <label for="image" id="drop-zone">
           <span id="file-display">Drop the image here <br />or</span>
@@ -30,18 +35,24 @@
           />
           <button id="remove-btn">Remove Image</button>
         </label>
-        <button id="submit-btn" type="submit">Sort Image</button>
+        <button id="submit-btn">Shuffle Image</button>
       </form>
 
       <section id="main-course">
-        <div id="original-image">
+        <div id="original-image-cont">
           <h3>Original Image</h3>
-          <img src="" alt="original-image" />
+          <img src="" alt="original-image" id="original-image" />
         </div>
-        <div id="sorted-image">
-          <h3>Sorted Image</h3>
-          <img src="" alt="sorted-image" />
+        <div id="shuffled-image-cont">
+          <h3>Shuffled Image</h3>
+          <img src="" alt="shuffled-image" id="shuffled-image" />
         </div>
+        <h2 style="margin-bottom: 1rem">
+          <b
+            >Is this what you wasted your time for? Maybe aim for a more
+            meaningful life, lol. :'(</b
+          >
+        </h2>
       </section>
     </main>
 
@@ -52,6 +63,6 @@
         access to it entirely.
       </p>
     </footer>
-    <script type="module" src="/frontend/src/app.js"></script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

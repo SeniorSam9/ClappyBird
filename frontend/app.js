@@ -1,12 +1,15 @@
-import { dragOverHandler, dropHandler } from "./scripts/dragAndDrop.js";
-import { handleOriginalImage } from "./scripts/handleOriginalImage.js";
+import {
+  dragOverHandler,
+  dropHandler,
+} from "../frontend/src/scripts/dragAndDrop.js";
+import { handleOriginalImage } from "../frontend/src/scripts/handleOriginalImage.js";
 import {
   dropZone,
   fileInput,
   removeBtn,
   fileDisplay,
-  submitBtn,
-} from "./constants/documentConstants.js";
+  myForm,
+} from "../frontend/src/constants/documentConstants.js";
 
 dropZone.addEventListener("dragover", (evt) => {
   dragOverHandler(evt, dropZone);
@@ -31,8 +34,8 @@ removeBtn.addEventListener("click", () => {
   fileDisplay.innerText = "Drop the image here or";
 });
 
-submitBtn.addEventListener("click", async (evt) => {
+myForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const originalImage = fileInput.files[0];
-  await handleOriginalImage(originalImage);
+  handleOriginalImage(originalImage);
 });

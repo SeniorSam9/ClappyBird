@@ -98,6 +98,7 @@ button:hover {
 #main-course {
   display: none;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   width: 80%;
 }

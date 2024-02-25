@@ -3,7 +3,7 @@ import fileSystem from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-async function sortImage(imageName, fileExtension) {
+async function shuffleImage(imageName, fileExtension) {
   // get image path
   const imagePath = getFilePath(imageName);
   // get image (read)
@@ -18,21 +18,23 @@ async function sortImage(imageName, fileExtension) {
       data: "Failure",
     };
   }
+
   // convert to pixels
   const pixels = await getPixels(bufferIn, typeToSupport);
   // modifyImage (Array.sort() uses MergeSort leading O(n * log(n)) based on (Mozilla/Firefox)
   // pixels.data just flattened the 2D array
-  pixels.data = pixels.data.sort();
+  pixels.data = pixels.data.sort(() => (Math.random() > 0.5 ? 1 : -1));
   // build the image again (write)
   const bufferOut = await savePixels(pixels, typeToSupport);
-  // save to sortedAssets
+  // save to shuffledAssets
   const timestamp = Date.now();
-  const sortedImageName = `${timestamp}${fileExtension}`;
-  const sortedImagePath = setFilePath(sortedImageName);
-  fileSystem.writeFileSync(sortedImagePath, bufferOut);
+  const shuffledImageName = `${timestamp}${fileExtension}`;
+  const shuffledImagePath = setFilePath(shuffledImageName);
+  fileSystem.writeFileSync(shuffledImagePath, bufferOut);
   return {
     procedure: true,
-    data: sortedImagePath,
+    originalImage: imagePath,
+    shuffledImage: shuffledImagePath,
   };
 }
 
@@ -56,12 +58,12 @@ function supportedFileExtension(extension) {
 function setFilePath(imageName) {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const sortedImagePath = path.join(
+  const shuffledImagePath = path.join(
     __dirname,
-    "../../frontend/sortedAssets",
+    "../../frontend/shuffledAssets",
     imageName
   );
-  return sortedImagePath;
+  return shuffledImagePath;
 }
 
 // returns paths to use
@@ -76,4 +78,4 @@ function getFilePath(imageName) {
   return imagePath;
 }
 
-export { sortImage };
+export { shuffleImage };

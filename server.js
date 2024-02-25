@@ -9,10 +9,11 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
+import { fileURLToPath } from "url";
 dotenv.config();
 import cors from "cors";
 import bodyParser from "body-parser";
-import { sortImage } from "./backend/models/sortImage.js";
+import { shuffleImage } from "./backend/models/shuffleImage.js";
 
 const server = express();
 const port = process.env.PORT || 3300;
@@ -25,6 +26,7 @@ server.use(express.static("originalAssets"));
 server.use(express.static("sortedAssets"));
 server.use(express.json());
 
+// constants
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "frontend/originalAssets");
@@ -45,6 +47,7 @@ const fileFilter = (req, file, callback) => {
   }
 };
 
+// multer config
 const uploader = multer({ storage: storage, fileFilter: fileFilter });
 
 // middle-wares
@@ -55,13 +58,14 @@ server.post(
     const uploadedImageName = req.file.filename;
     const fileExtension = path.extname(uploadedImageName);
     try {
-      const { procedure, data } = await sortImage(
+      const { procedure, originalImage, shuffledImage } = await shuffleImage(
         uploadedImageName,
         fileExtension
       );
       res.json({
-        procedure: procedure,
-        data: data,
+        procedure,
+        originalImage,
+        shuffledImage,
       });
     } catch (error) {
       console.error(error);
