@@ -9,11 +9,11 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 dotenv.config();
 import cors from "cors";
 import bodyParser from "body-parser";
 import { shuffleImage } from "./backend/models/shuffleImage.js";
+import { deleteImages } from "./backend/models/deleteImages.js";
 
 const server = express();
 const port = process.env.PORT || 3300;
@@ -23,7 +23,7 @@ const allowedFileTypes = ["image/jpeg", "image/png"];
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(express.static("originalAssets"));
-server.use(express.static("sortedAssets"));
+server.use(express.static("shuffledAssets"));
 server.use(express.json());
 
 // constants
@@ -48,7 +48,7 @@ const fileFilter = (req, file, callback) => {
 };
 
 // multer config
-const uploader = multer({ storage: storage, fileFilter: fileFilter });
+const uploader = multer({ storage: storage, fileFilter });
 
 // middle-wares
 server.post(
@@ -76,6 +76,12 @@ server.post(
     }
   }
 );
+
+server.get("/delete-images", (req, res) => {
+  return deleteImages().procedure
+    ? res.json({ procedure: true })
+    : res.json({ procedure: false });
+});
 
 server.listen(port, () => {
   console.info(`⚡ Server is running at http://localhost:${port}`);

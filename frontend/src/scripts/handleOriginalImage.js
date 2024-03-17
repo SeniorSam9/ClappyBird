@@ -57,7 +57,18 @@ function displayErrorMsg() {
     errorMsg.style.display = "none";
   }, 4000);
   errorMsg.style.display = "inline-block";
+  // the end of the app course
+  triggerImageDelete();
   return;
+}
+
+function triggerImageDelete() {
+  fetch("http://localhost:3300/delete-images")
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.procedure) {
+      }
+    });
 }
 
 export { handleOriginalImage };
